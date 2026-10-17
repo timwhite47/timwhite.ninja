@@ -1,0 +1,61 @@
+{
+  "manifest": "hf-incident-sources",
+  "description": "Primary documents on the July 2026 OpenAI agent / Hugging Face incident, as retrieved for this investigation. Hashes identify the exact bytes read. The documents are not redistributed here; fetch them from the URL or archive link and compare the sha256.",
+  "retrieved": "2026-10-16",
+  "hash": "sha256",
+  "sources": [
+    {
+      "id": "openai-hf-report",
+      "title": "OpenAI – Hugging Face Incident Technical Report",
+      "publisher": "OpenAI",
+      "published": "2026-08-26",
+      "role": "first-party (operator of the agents)",
+      "url": "https://cdn.openai.com/pdf/67869394-cb91-4c12-888c-5cbd85c7814c/OpenAI-Hugging-Face%20Incident-Technical-Report.pdf",
+      "media_type": "application/pdf",
+      "pages": 38,
+      "bytes": 521159,
+      "sha256": "dd635cf6e5f39f0e1f646f08c36549090d77156ed89cbd3d733ed496648cae9c",
+      "archive": null
+    },
+    {
+      "id": "metr-redwood-investigation",
+      "title": "Brief independent investigation of agents' behavior, reasoning and collaboration in the OpenAI / Hugging Face hacking incident",
+      "publisher": "METR and Redwood Research",
+      "published": "2026-08-26",
+      "role": "third-party assessment (data access provided by OpenAI)",
+      "url": "https://metr.org/hugging-face-incident-report-aug-2026.pdf",
+      "media_type": "application/pdf",
+      "pages": 91,
+      "bytes": 7443085,
+      "sha256": "f7e87133833363da6eee661df0c86926ef852f8b202ad87695ea6596b92d3c73",
+      "archive": "https://web.archive.org/web/20261016112956/https://metr.org/hugging-face-incident-report-aug-2026.pdf"
+    },
+    {
+      "id": "hf-technical-timeline",
+      "title": "Anatomy of a Frontier Lab Agent Intrusion: A Technical Timeline of the July 2026 Incident",
+      "publisher": "Hugging Face",
+      "published": "2026-07-27",
+      "role": "first-party (affected party; defender view)",
+      "url": "https://huggingface.co/blog/agent-intrusion-technical-timeline",
+      "media_type": "text/html",
+      "bytes": 728295,
+      "sha256": "9ed13e52d4f1c0879a145189aa8be35c8c60eaff9aba87adf85775ce3e38b612",
+      "hash_note": "HTML page; the hash covers the bytes served on the retrieval date and will change if the page or its markup changes.",
+      "archive": null
+    },
+    {
+      "id": "csa-research-note",
+      "title": "HuggingFace Breach: What the Full Investigation Reveals About Agentic AI Risk",
+      "title_note": "Read from the PDF's first page; the document has no title metadata.",
+      "publisher": "Cloud Security Alliance",
+      "published": "2026-09-02",
+      "role": "secondary analysis",
+      "url": "https://labs.cloudsecurityalliance.org/wp-content/uploads/2026/09/CSA_research_note_hugging_face_rogue_agent_swarm_20260902-csa-styled.pdf",
+      "media_type": "application/pdf",
+      "pages": 10,
+      "bytes": 2048794,
+      "sha256": "2783b341be6cf3026e318966bcd9ab95d39ba9fe5211f3a915f8c2a6cf7aff99",
+      "archive": null
+    }
+  ]
+}

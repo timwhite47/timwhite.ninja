@@ -3,3 +3,7 @@ dist
 .astro
 .env*
 .DS_Store
+
+# Private source archive (copyrighted documents, not redistributed). See scripts/pack-archive.sh
+archive/
+archive-*.tar.gz

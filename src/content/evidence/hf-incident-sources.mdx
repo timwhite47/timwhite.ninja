@@ -1,0 +1,46 @@
+---
+title: "Sources: the July 2026 agent swarm incident"
+summary: "The four primary documents behind the swarm-profiling investigation, each with its sha256, size, retrieval date and archive link. The documents themselves are not redistributed."
+kind: factsheet
+date: 2026-10-16
+draft: true
+synthetic: false
+license: CC0-1.0
+tags: [swarms, ai-agents, provenance]
+files:
+  - { path: sources.json, label: "Source manifest (JSON)", role: primary, lang: json }
+provenance:
+  method: "Each document was downloaded from its canonical URL on 2026-10-16 and hashed with sha256. PDF page counts were read from the file. Copies are held in a private archive and are not published here."
+  producedAt: 2026-10-16
+  caveats:
+    - "The public record is first-party: OpenAI ran the agents, Hugging Face was the affected party, and METR/Redwood worked from data OpenAI chose to share. No raw logs or message data are public."
+    - "The Hugging Face hash covers an HTML page and will not match a later fetch if the page changes."
+    - "Only the METR document had an Internet Archive snapshot on the retrieval date."
+sources:
+  - { id: openai-hf-report, title: "OpenAI – Hugging Face Incident Technical Report", url: "https://cdn.openai.com/pdf/67869394-cb91-4c12-888c-5cbd85c7814c/OpenAI-Hugging-Face%20Incident-Technical-Report.pdf", publisher: "OpenAI", date: 2026-08-26, accessed: 2026-10-16 }
+  - { id: metr-redwood-investigation, title: "Brief independent investigation of agents' behavior, reasoning and collaboration in the OpenAI / Hugging Face hacking incident", url: "https://metr.org/hugging-face-incident-report-aug-2026.pdf", publisher: "METR and Redwood Research", date: 2026-08-26, accessed: 2026-10-16, archive: "https://web.archive.org/web/20261016112956/https://metr.org/hugging-face-incident-report-aug-2026.pdf" }
+  - { id: hf-technical-timeline, title: "Anatomy of a Frontier Lab Agent Intrusion: A Technical Timeline of the July 2026 Incident", url: "https://huggingface.co/blog/agent-intrusion-technical-timeline", publisher: "Hugging Face", date: 2026-07-27, accessed: 2026-10-16 }
+  - { id: csa-research-note, title: "HuggingFace Breach: What the Full Investigation Reveals About Agentic AI Risk", url: "https://labs.cloudsecurityalliance.org/wp-content/uploads/2026/09/CSA_research_note_hugging_face_rogue_agent_swarm_20260902-csa-styled.pdf", publisher: "Cloud Security Alliance", date: 2026-09-02, accessed: 2026-10-16 }
+related: [bau-meets-cybercrime-for-ai]
+---
+
+## How to check a source
+
+Download the document from its URL (or the archive link, where one exists) and compare:
+
+```sh
+shasum -a 256 <downloaded-file>
+```
+
+A matching hash means you are reading the same bytes this investigation read. A mismatch means the publisher has changed the document since 2026-10-16.
+
+## Who is speaking
+
+| Source | Relationship to the incident |
+|---|---|
+| OpenAI | Operated the agents. |
+| METR / Redwood Research | Independent assessors, working from data OpenAI shared. |
+| Hugging Face | The affected party. Its account is the outside view. |
+| Cloud Security Alliance | Secondary analysis of the above. |
+
+The numbers in these documents largely agree, but they do not come from independent sources.
