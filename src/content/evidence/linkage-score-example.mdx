@@ -1,0 +1,34 @@
+---
+title: "Linkage score: sequence vs. marker similarity"
+summary: "A dependency-free Python script that scores pairwise similarity between agents two ways — over action sequences (modus operandi) and over rare non-instrumental markers (signature) — and prints the most-linked pairs under each."
+kind: code
+date: 2026-10-16
+synthetic: false
+license: MIT
+tags: [linkage-analysis, python, detection]
+files:
+  - { path: linkage_score.py, label: "Script", role: primary, lang: python }
+  - { path: example_output.txt, label: "Output on the synthetic timeline", role: rendered }
+provenance:
+  method: "Written by hand for the related post. Reads any CSV with the columns documented in the synthetic timeline schema; builds per-agent event-type trigram sets and marker sets; computes Jaccard similarity for both; prints the top-k pairs per view and the pairs the two views disagree on."
+  producedAt: 2026-10-16
+  caveats:
+    - "Illustrative. Jaccard over trigrams is a teaching baseline, not a detection method anyone should deploy."
+sources:
+  - { id: jaccard-index, title: "Jaccard index", url: "https://en.wikipedia.org/wiki/Jaccard_index", publisher: "Wikipedia", accessed: 2026-10-16, note: "Definition of the similarity measure used." }
+related: [bau-meets-cybercrime-for-ai]
+---
+
+## What it measures
+
+Two views of "these two agents look alike". The modus-operandi view compares ordered event-type trigrams. The signature view compares rare markers that serve no task purpose.
+
+## Run it
+
+```sh
+python linkage_score.py swarm_timeline.csv --top 10 --min-events 5
+```
+
+## Reading the output
+
+Each view prints its top pairs with a Jaccard score. The final section lists pairs the signature view links but the modus-operandi view does not.

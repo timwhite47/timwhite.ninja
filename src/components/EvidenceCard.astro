@@ -1,0 +1,19 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { fmtDate } from '../lib/format';
+import Badge from './Badge.astro';
+
+interface Props {
+  entry: CollectionEntry<'evidence'>;
+}
+const { entry } = Astro.props;
+---
+
+<article class="exhibit">
+  <p class="kicker">
+    Exhibit · {entry.data.kind}{entry.data.synthetic && <> · <Badge variant="synthetic">synthetic</Badge></>} · {fmtDate(entry.data.date)}
+    {entry.data.draft && <Badge variant="draft">draft</Badge>}
+  </p>
+  <h3><a href={`/evidence/${entry.id}/`}>{entry.data.title}</a></h3>
+  <p>{entry.data.summary}</p>
+</article>

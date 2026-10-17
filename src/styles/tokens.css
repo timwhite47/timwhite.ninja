@@ -1,0 +1,42 @@
+:root {
+  --bg: #F3F3F0;
+  --surface: #FBFBFA;
+  --surface-2: #E9E9E4;
+  --ink: #14171A;
+  --ink-2: #3B4046;
+  --muted: #5E656D;
+  --rule: #D2D3CE;
+  --accent: #0E6B74;
+  --accent-ink: #FFFFFF;
+  --flag: #8A5200;
+  --danger: #A3262B;
+  --selection: rgba(14, 107, 116, 0.18);
+  --font-sans: 'Public Sans Variable', system-ui, sans-serif;
+  --font-serif: 'Literata Variable', Georgia, serif;
+  --font-mono: 'JetBrains Mono Variable', ui-monospace, SFMono-Regular, monospace;
+  --radius: 2px;
+  --measure: 68ch;
+  --wide: 88ch;
+  --max: 72rem;
+  --s-1: 0.25rem; --s-2: 0.5rem; --s-3: 0.75rem; --s-4: 1rem; --s-5: 1.5rem;
+  --s-6: 2rem; --s-7: 3rem; --s-8: 4rem; --s-9: 6rem;
+  --fs-0: 0.8125rem; --fs-1: 0.9375rem; --fs-2: 1.0625rem; --fs-3: 1.25rem; --fs-4: 1.5rem;
+  --fs-5: clamp(1.9rem, 1.3rem + 2vw, 2.75rem);
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  --bg: #101214;
+  --surface: #16191C;
+  --surface-2: #1E2226;
+  --ink: #E6E4DE;
+  --ink-2: #C3C1BA;
+  --muted: #969CA3;
+  --rule: #2B3036;
+  --accent: #46B8C2;
+  --accent-ink: #0B1C1E;
+  --flag: #E0A24A;
+  --danger: #E06C70;
+  --selection: rgba(70, 184, 194, 0.22);
+  color-scheme: dark;
+}

@@ -1,0 +1,21 @@
+---
+import Base from '../../layouts/Base.astro';
+import PostCard from '../../components/PostCard.astro';
+import { getPosts } from '../../lib/collections';
+
+const posts = await getPosts();
+const years = [...new Set(posts.map((p) => p.data.date.getUTCFullYear()))];
+---
+
+<Base title="Posts">
+  <h1>Posts</h1>
+  {posts.length === 0 && <p class="meta">Nothing published yet.</p>}
+  {
+    years.map((y) => (
+      <section class="year">
+        <h2 class="kicker">{y}</h2>
+        {posts.filter((p) => p.data.date.getUTCFullYear() === y).map((post) => <PostCard post={post} />)}
+      </section>
+    ))
+  }
+</Base>

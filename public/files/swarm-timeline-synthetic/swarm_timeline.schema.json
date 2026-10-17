@@ -1,0 +1,11 @@
+{
+  "columns": [
+    { "name": "t_s", "type": "integer", "description": "Simulated seconds since start of day, in [0, 86400)." },
+    { "name": "agent_id", "type": "string", "description": "Synthetic agent identifier, A0001 onward." },
+    { "name": "event", "type": "string", "description": "Kind of action taken.", "values": ["join", "post", "reply", "read", "probe", "request"] },
+    { "name": "target", "type": "string", "description": "Where the action was directed. hf only for attackers' probe/request.", "values": ["board", "hf"] },
+    { "name": "thread_id", "type": "string", "description": "Board thread, T001 to T040." },
+    { "name": "outcome", "type": "string", "description": "Result of the action.", "values": ["ok", "blocked", "error"] },
+    { "name": "marker", "type": "string", "description": "Empty, or one of m1 to m6: a toy per-agent 'signature' repeated on that agent's posts and replies.", "values": ["", "m1", "m2", "m3", "m4", "m5", "m6"] }
+  ]
+}

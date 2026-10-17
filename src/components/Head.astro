@@ -1,0 +1,35 @@
+---
+import { SITE } from '../site';
+
+interface Props {
+  title: string;
+  description?: string;
+  type?: 'website' | 'article';
+}
+const { title, description = SITE.tagline, type = 'website' } = Astro.props;
+const fullTitle = Astro.url.pathname === '/' ? SITE.title : `${title} — ${SITE.title}`;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="color-scheme" content="light dark" />
+<script is:inline>
+  (() => {
+    try {
+      const s = localStorage.getItem('theme');
+      const t = s === 'light' || s === 'dark' ? s : matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.dataset.theme = t;
+    } catch {}
+  })();
+</script>
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="alternate" type="application/rss+xml" title={SITE.title} href="/rss.xml" />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:type" content={type} />
+<meta property="og:url" content={canonical} />
+<meta name="generator" content={Astro.generator} />

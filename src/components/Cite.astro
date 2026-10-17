@@ -1,0 +1,13 @@
+---
+interface Props {
+  id: string;
+}
+const { id } = Astro.props;
+const sources = Astro.locals.sources ?? [];
+const i = sources.findIndex((s) => s.id === id);
+if (i < 0) {
+  throw new Error(`<Cite id="${id}"> has no matching source in frontmatter (${Astro.url.pathname})`);
+}
+---
+
+<sup class="cite"><a href={`#src-${id}`} aria-label={`Source ${i + 1}: ${sources[i]!.title}`}>[{i + 1}]</a></sup>

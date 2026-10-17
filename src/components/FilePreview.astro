@@ -1,0 +1,51 @@
+---
+import { readFileSync } from 'node:fs';
+import type { ResolvedFile } from '../lib/evidence-files';
+import { previewCsv } from '../lib/csv-preview';
+import CodeBlock from './CodeBlock.astro';
+
+interface Props {
+  file: ResolvedFile;
+  alt?: string;
+}
+const { file, alt } = Astro.props;
+const ext = file.path.split('.').pop()?.toLowerCase() ?? '';
+const MAX_LINES = 200;
+let csv = null as ReturnType<typeof previewCsv> | null;
+let text = '';
+let truncated = false;
+if (ext === 'csv') {
+  csv = previewCsv(file.abs, 20);
+} else if (['json', 'py', 'js', 'ts', 'sh', 'md', 'txt'].includes(ext)) {
+  const lines = readFileSync(file.abs, 'utf8').split('\n');
+  truncated = lines.length > MAX_LINES;
+  text = lines.slice(0, MAX_LINES).join('\n');
+}
+---
+
+{
+  csv ? (
+    <div class="table-wrap">
+      <table class="preview">
+        <caption>Showing {csv.rows.length} of {csv.total.toLocaleString('en-US')} rows</caption>
+        <thead>
+          <tr>{csv.header.map((h) => <th>{h}</th>)}</tr>
+        </thead>
+        <tbody>
+          {csv.rows.map((r) => (
+            <tr>{r.map((c) => <td>{c}</td>)}</tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  ) : text ? (
+    <>
+      <CodeBlock code={text} lang={file.lang} filename={file.path} />
+      {truncated && <p class="meta">Truncated at {MAX_LINES} lines — download for the full file.</p>}
+    </>
+  ) : ext === 'svg' || ext === 'png' ? (
+    <img src={file.url} alt={alt ?? file.label} />
+  ) : (
+    <p class="meta">No inline preview for this file type.</p>
+  )
+}

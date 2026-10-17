@@ -1,0 +1,33 @@
+---
+import { getEntry } from 'astro:content';
+import { resolveFiles } from '../lib/evidence-files';
+import { fmtBytes, fmtDate, shortHash } from '../lib/format';
+import Badge from './Badge.astro';
+
+interface Props {
+  id: string;
+  compact?: boolean;
+}
+const { id, compact = false } = Astro.props;
+const entry = await getEntry('evidence', id);
+if (!entry) throw new Error(`<EvidenceEmbed id="${id}"> matches no evidence entry`);
+const files = resolveFiles(entry);
+---
+
+<aside class="exhibit embed" aria-label={`Exhibit: ${entry.data.title}`}>
+  <p class="kicker">
+    Exhibit · {entry.data.kind}{entry.data.synthetic && <> · <Badge variant="synthetic">synthetic</Badge></>} · {fmtDate(entry.data.date)}
+  </p>
+  <h3><a href={`/evidence/${entry.id}/`}>{entry.data.title}</a></h3>
+  {!compact && <p>{entry.data.summary}</p>}
+  <ul class="embed-files">
+    {
+      files.map((f) => (
+        <li>
+          <a href={f.url}>{f.label}</a> <span class="meta">{fmtBytes(f.bytes)} · <code title={f.sha256}>{shortHash(f.sha256)}</code></span>
+        </li>
+      ))
+    }
+  </ul>
+  <p><a href={`/evidence/${entry.id}/`}>Open evidence page →</a></p>
+</aside>

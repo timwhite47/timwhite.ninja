@@ -1,0 +1,20 @@
+---
+import Base from '../../layouts/Base.astro';
+import { collectTags } from '../../lib/collections';
+
+const tags = [...(await collectTags()).entries()];
+---
+
+<Base title="Tags">
+  <h1>Tags</h1>
+  <ul class="taglist big">
+    {
+      tags.map(([t, b]) => (
+        <li>
+          <a href={`/tags/${t}/`}>{t}</a>
+          <span class="meta"> {b.posts.length} posts · {b.evidence.length} evidence</span>
+        </li>
+      ))
+    }
+  </ul>
+</Base>

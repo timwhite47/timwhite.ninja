@@ -1,0 +1,21 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { fmtDate, readingTime } from '../lib/format';
+import Badge from './Badge.astro';
+import TagList from './TagList.astro';
+
+interface Props {
+  post: CollectionEntry<'posts'>;
+}
+const { post } = Astro.props;
+---
+
+<article class="post-card">
+  <p class="kicker">
+    {post.data.kicker && <span>{post.data.kicker} · </span>}{fmtDate(post.data.date)} · {readingTime(post.body)} min
+    {post.data.draft && <Badge variant="draft">draft</Badge>}
+  </p>
+  <h3><a href={`/posts/${post.id}/`}>{post.data.title}</a></h3>
+  <p>{post.data.description}</p>
+  <TagList tags={post.data.tags} />
+</article>

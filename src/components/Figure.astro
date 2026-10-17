@@ -1,0 +1,12 @@
+---
+interface Props {
+  caption: string;
+  n?: number;
+}
+const { caption, n } = Astro.props;
+---
+
+<figure class="figure">
+  <slot />
+  <figcaption>{n !== undefined && <span class="kicker">Figure {n}. </span>}{caption}</figcaption>
+</figure>

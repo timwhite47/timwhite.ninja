@@ -1,0 +1,20 @@
+---
+interface Props {
+  name: string;
+  caption?: string;
+  fallbackHref?: string;
+  fallbackText?: string;
+}
+const { name, caption, fallbackHref, fallbackText = 'Download the data' } = Astro.props;
+---
+
+<figure class="island" data-island={name}>
+  <slot />
+  {caption && <figcaption>{caption}</figcaption>}
+  <noscript>
+    <p>
+      Interactive view needs JavaScript.
+      {fallbackHref && <a href={fallbackHref}>{fallbackText}</a>}
+    </p>
+  </noscript>
+</figure>

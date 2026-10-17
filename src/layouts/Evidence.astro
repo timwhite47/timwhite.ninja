@@ -1,0 +1,94 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Base from './Base.astro';
+import Badge from '../components/Badge.astro';
+import FileList from '../components/FileList.astro';
+import FilePreview from '../components/FilePreview.astro';
+import Sources from '../components/Sources.astro';
+import TagList from '../components/TagList.astro';
+import SwarmReplay from '../components/islands/SwarmReplay.astro';
+import { resolveFiles } from '../lib/evidence-files';
+import { postsForEvidence } from '../lib/collections';
+import { fmtDate } from '../lib/format';
+
+interface Props {
+  entry: CollectionEntry<'evidence'>;
+}
+const { entry } = Astro.props;
+const { data } = entry;
+const files = resolveFiles(entry);
+const primary = files.find((f) => f.role === 'primary')!;
+const usedIn = await postsForEvidence(entry);
+const islands = { 'swarm-replay': SwarmReplay } as const;
+const Island = data.island ? islands[data.island] : undefined;
+const gen = data.provenance.generator;
+---
+
+<Base title={data.title} description={data.summary}>
+  <article class="evidence">
+    <header class="post-head">
+      <p class="kicker">Exhibit · {fmtDate(data.date)}</p>
+      <h1>{data.title}</h1>
+      <p class="badges">
+        <Badge variant="kind">{data.kind}</Badge>
+        {data.synthetic && <Badge variant="synthetic">Synthetic</Badge>}
+        <Badge variant="license">{data.license}</Badge>
+        {data.draft && <Badge variant="draft">draft</Badge>}
+      </p>
+      <p class="lede">{data.summary}</p>
+      <TagList tags={data.tags} />
+    </header>
+
+    <section aria-labelledby="prov-h" class="provenance">
+      <h2 id="prov-h">Provenance</h2>
+      <p>{data.provenance.method}</p>
+      <dl>
+        {gen && (
+          <>
+            <dt>Generator</dt>
+            <dd><code>{gen.tool}{gen.version ? ` ${gen.version}` : ''}</code></dd>
+            {gen.seed !== undefined && (<><dt>Seed</dt><dd><code>{gen.seed}</code></dd></>)}
+            {gen.command && (<><dt>Command</dt><dd><code>{gen.command}</code></dd></>)}
+          </>
+        )}
+        <dt>Produced</dt>
+        <dd>{fmtDate(data.provenance.producedAt)}</dd>
+      </dl>
+      {
+        data.provenance.caveats.length > 0 && (
+          <>
+            <h3>Caveats</h3>
+            <ul>{data.provenance.caveats.map((c) => <li>{c}</li>)}</ul>
+          </>
+        )
+      }
+    </section>
+
+    <section aria-labelledby="files-h">
+      <h2 id="files-h">Files</h2>
+      <FileList files={files} />
+    </section>
+
+    <section aria-labelledby="preview-h">
+      <h2 id="preview-h">Preview</h2>
+      <FilePreview file={primary} alt={data.figure?.alt} />
+      {files.filter((f) => f.role === 'rendered').map((f) => <FilePreview file={f} />)}
+    </section>
+
+    {Island && <section aria-labelledby="viz-h"><h2 id="viz-h">Replay</h2><Island evidence={entry.id} /></section>}
+
+    <div class="prose">
+      <slot />
+    </div>
+
+    {
+      usedIn.length > 0 && (
+        <section aria-labelledby="used-h">
+          <h2 id="used-h">Used in</h2>
+          <ul>{usedIn.map((p) => <li><a href={`/posts/${p.id}/`}>{p.data.title}</a></li>)}</ul>
+        </section>
+      )
+    }
+    <Sources sources={data.sources} />
+  </article>
+</Base>

@@ -1,0 +1,35 @@
+== MO view (event-type trigrams) ==
+A0006  A0068  1.000
+A0027  A0290  1.000
+A0213  A0427  1.000
+A0289  A0496  1.000
+A0312  A0551  1.000
+A0445  A0591  1.000
+A0460  A0579  1.000
+A0702  A0786  1.000
+A0709  A0950  1.000
+A0711  A1093  1.000
+
+== Signature view (markers) ==
+A0002  A0016  1.000
+A0002  A0024  1.000
+A0002  A0034  1.000
+A0002  A0040  1.000
+A0002  A0041  1.000
+A0002  A0051  1.000
+A0002  A0074  1.000
+A0002  A0080  1.000
+A0002  A0096  1.000
+A0002  A0098  1.000
+
+== Disagreements: top signature pairs with low MO similarity ==
+A0002  A0016  signature=1.000  mo=0.143
+A0002  A0024  signature=1.000  mo=0.000
+A0002  A0034  signature=1.000  mo=0.000
+A0002  A0040  signature=1.000  mo=0.000
+A0002  A0041  signature=1.000  mo=0.143
+A0002  A0051  signature=1.000  mo=0.000
+A0002  A0074  signature=1.000  mo=0.000
+A0002  A0080  signature=1.000  mo=0.000
+A0002  A0096  signature=1.000  mo=0.143
+A0002  A0098  signature=1.000  mo=0.071

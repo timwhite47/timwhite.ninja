@@ -1,0 +1,15 @@
+---
+import { render } from 'astro:content';
+import Evidence from '../../layouts/Evidence.astro';
+import { getEvidence } from '../../lib/collections';
+
+export async function getStaticPaths() {
+  return (await getEvidence()).map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<Evidence entry={entry}>
+  <Content />
+</Evidence>

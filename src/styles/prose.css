@@ -1,0 +1,11 @@
+.prose { max-width: var(--measure); }
+.prose p, .prose li { font-family: var(--font-serif); }
+.prose blockquote { margin: var(--s-4) 0; padding-left: var(--s-4); border-left: 3px solid var(--rule); color: var(--ink-2); }
+.prose ul, .prose ol { padding-left: var(--s-5); }
+.prose :not(pre) > code { background: var(--surface-2); padding: 0 0.3em; border-radius: var(--radius); }
+.prose table { font-size: var(--fs-1); }
+.prose .exhibit, .prose .island { max-width: var(--wide); }
+.footnotes { border-top: 1px solid var(--rule); margin-top: var(--s-6); font-size: var(--fs-1); color: var(--ink-2); }
+.footnotes h2 { font-size: var(--fs-0); font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+.figure { margin: var(--s-5) 0; }
+.figure figcaption { font-size: var(--fs-1); color: var(--muted); }

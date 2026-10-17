@@ -1,0 +1,27 @@
+---
+import Base from '../layouts/Base.astro';
+import PostCard from '../components/PostCard.astro';
+import EvidenceCard from '../components/EvidenceCard.astro';
+import { SITE } from '../site';
+import { getPosts, getEvidence } from '../lib/collections';
+
+const posts = (await getPosts()).slice(0, 3);
+const evidence = (await getEvidence()).slice(0, 4);
+---
+
+<Base title={SITE.title}>
+  <section class="hero">
+    <h1>{SITE.title}</h1>
+    <p class="lede">{SITE.tagline}</p>
+  </section>
+  <section aria-labelledby="latest-h">
+    <h2 id="latest-h">Latest</h2>
+    {posts.length ? posts.map((post) => <PostCard post={post} />) : <p class="meta">Nothing published yet.</p>}
+    <p><a href="/posts/">All posts →</a></p>
+  </section>
+  <section aria-labelledby="shelf-h">
+    <h2 id="shelf-h">Evidence shelf</h2>
+    {evidence.map((entry) => <EvidenceCard entry={entry} />)}
+    <p><a href="/evidence/">All evidence →</a> · <a href="/rss.xml">Feed</a></p>
+  </section>
+</Base>

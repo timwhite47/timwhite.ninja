@@ -1,0 +1,18 @@
+---
+import Base from '../../layouts/Base.astro';
+import PostCard from '../../components/PostCard.astro';
+import EvidenceCard from '../../components/EvidenceCard.astro';
+import { collectTags } from '../../lib/collections';
+
+export async function getStaticPaths() {
+  return [...(await collectTags()).entries()].map(([tag, bucket]) => ({ params: { tag }, props: { bucket } }));
+}
+const { tag } = Astro.params;
+const { bucket } = Astro.props;
+---
+
+<Base title={`Tag: ${tag}`}>
+  <h1>Tag: {tag}</h1>
+  {bucket.posts.length > 0 && <section><h2>Posts</h2>{bucket.posts.map((post) => <PostCard post={post} />)}</section>}
+  {bucket.evidence.length > 0 && <section><h2>Evidence</h2>{bucket.evidence.map((entry) => <EvidenceCard entry={entry} />)}</section>}
+</Base>

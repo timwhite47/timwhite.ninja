@@ -1,0 +1,30 @@
+---
+import type { Source } from '../schemas/source';
+import { fmtDate } from '../lib/format';
+
+interface Props {
+  sources: Source[];
+}
+const { sources } = Astro.props;
+---
+
+{
+  sources.length > 0 && (
+    <section class="sources" aria-labelledby="sources-h">
+      <h2 id="sources-h">Sources</h2>
+      <ol>
+        {sources.map((s) => (
+          <li id={`src-${s.id}`}>
+            <a href={s.url}>{s.title}</a>
+            {s.publisher && <span>, {s.publisher}</span>}
+            {s.author && <span>, {s.author}</span>}
+            {s.date && <span> ({fmtDate(s.date)})</span>}
+            <span class="meta"> · accessed {fmtDate(s.accessed)}</span>
+            {s.archive && <> · <a href={s.archive}>[archived]</a></>}
+            {s.note && <span class="meta"> — {s.note}</span>}
+          </li>
+        ))}
+      </ol>
+    </section>
+  )
+}

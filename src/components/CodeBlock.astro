@@ -1,0 +1,16 @@
+---
+import { Code } from 'astro:components';
+import { SHIKI_THEMES } from '../lib/shiki';
+
+interface Props {
+  code: string;
+  lang?: string;
+  filename?: string;
+}
+const { code, lang = 'text', filename } = Astro.props;
+---
+
+<div class="codeblock">
+  {filename && <div class="codeblock-bar">{filename}</div>}
+  <Code code={code} lang={lang as any} themes={SHIKI_THEMES} defaultColor={false} />
+</div>

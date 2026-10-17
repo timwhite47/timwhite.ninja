@@ -1,0 +1,57 @@
+---
+title: "BAU meets cybercrime for AI"
+kicker: "Case note"
+description: "TODO — one sentence for the feed and meta description."
+date: 2026-10-16
+draft: true
+tags: [behavioral-profiling, ai-agents, swarms, linkage-analysis]
+evidence: [swarm-timeline-synthetic, linkage-score-example]
+sources: [] # every factual claim below gets a source here and a <Cite/> in the text before draft: false
+---
+import EvidenceEmbed from '../../components/EvidenceEmbed.astro';
+import SwarmReplay from '../../components/islands/SwarmReplay.astro';
+import Cite from '../../components/Cite.astro';
+
+> TODO: why a 1990s profiling vocabulary is the right lens for machine collectives. No claims about the incident here.
+
+## The incident, as reported
+
+> TODO: only sourced statements. Any count (agents involved, agents attacking, duration) must carry a Cite to a primary source. Until sources[] is non-empty, do not use Cite — the build fails on an unknown id by design.
+
+{/* example once sourced: ...self-organised on a message board.<Cite id="primary-postmortem" /> */}
+
+## What the BAU actually does
+
+### Modus operandi vs. signature
+
+> TODO: MO = learned, instrumental, changes with experience; signature = non-instrumental, stable. Define, then cite a profiling text.
+
+### Linkage analysis
+
+> TODO: connecting incidents to a common actor by behaviour, and its known failure modes.
+
+## Translating the vocabulary to agent swarms
+
+> TODO: MO ↔ tool-use sequences, timing, target selection; signature ↔ regularities with no task value (naming, formatting, ordering). Where the analogy breaks.
+
+## A replay, on synthetic data
+
+<EvidenceEmbed id="swarm-timeline-synthetic" />
+
+The replay below runs on a generated dataset. It is shaped to the scale discussed above and encodes nothing about the real event.
+
+<SwarmReplay evidence="swarm-timeline-synthetic" caption="Synthetic timeline: agents on the board (top lane) and acting against the second target (bottom lane). Random draws, seed 42." />
+
+## Linkage in practice
+
+<EvidenceEmbed id="linkage-score-example" />
+
+> TODO: walk through the two similarity views the script prints and what a real analyst would do next.
+
+## What a swarm profile would contain
+
+> TODO: a bulleted template (coordination channel, division of labour, target selection, tempo, signature candidates, provenance of each field).
+
+## Limits, objections, and what would change my mind
+
+> TODO:

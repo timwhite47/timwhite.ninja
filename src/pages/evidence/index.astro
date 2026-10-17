@@ -1,0 +1,26 @@
+---
+import Base from '../../layouts/Base.astro';
+import EvidenceCard from '../../components/EvidenceCard.astro';
+import { getEvidence } from '../../lib/collections';
+
+const all = await getEvidence();
+const kinds = ['dataset', 'code', 'chart', 'factsheet'] as const;
+---
+
+<Base title="Evidence">
+  <h1>Evidence</h1>
+  <p class="lede">Raw files, scripts and datasets behind the posts, with provenance.</p>
+  {
+    kinds.map((k) => {
+      const items = all.filter((e) => e.data.kind === k);
+      return (
+        items.length > 0 && (
+          <section id={k}>
+            <h2>{k}</h2>
+            {items.map((entry) => <EvidenceCard entry={entry} />)}
+          </section>
+        )
+      );
+    })
+  }
+</Base>
