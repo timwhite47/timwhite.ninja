@@ -2,6 +2,7 @@ import { createHash } from 'node:crypto';
 import { existsSync, readFileSync, statSync } from 'node:fs';
 import path from 'node:path';
 import type { CollectionEntry } from 'astro:content';
+import type { BundledLanguage } from 'shiki';
 
 export interface ResolvedFile {
   path: string;
@@ -12,7 +13,7 @@ export interface ResolvedFile {
   bytes: number;
   sha256: string;
   mediaType: string;
-  lang: string;
+  lang: BundledLanguage | 'text';
 }
 
 const MEDIA: Record<string, string> = {
@@ -28,7 +29,7 @@ const MEDIA: Record<string, string> = {
   txt: 'text/plain',
 };
 
-const LANG: Record<string, string> = {
+const LANG: Record<string, BundledLanguage | 'text'> = {
   csv: 'csv',
   json: 'json',
   py: 'python',

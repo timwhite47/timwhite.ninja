@@ -101,7 +101,8 @@ export function mount(host: HTMLElement): () => void {
   function setPlaying(p: boolean) {
     playing = p;
     toggle.textContent = p ? 'Pause' : 'Play';
-    toggle.setAttribute('aria-pressed', String(p));
+    if (p) startLoop();
+    else loop?.stop();
   }
 
   function render() {
@@ -117,16 +118,11 @@ export function mount(host: HTMLElement): () => void {
     updateStatus(true);
   };
   const onSpeed = () => (speed = Number(speedSel.value));
-  const onKey = (e: KeyboardEvent) => {
-    if (e.code === 'Space' && e.target === host.querySelector('.replay-toolbar')) {
-      e.preventDefault();
-      onToggle();
-    }
-  };
   toggle.addEventListener('click', onToggle);
   scrub.addEventListener('input', onScrub);
   speedSel.addEventListener('change', onSpeed);
-  host.querySelector('.replay-toolbar')?.addEventListener('keydown', onKey as EventListener);
+  const themeObserver = new MutationObserver(() => draw());
+  themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 
   const ro = new ResizeObserver(resize);
   ro.observe(canvas);
@@ -152,19 +148,22 @@ export function mount(host: HTMLElement): () => void {
       status.textContent = 'Could not load the data. Use the CSV link instead.';
     });
 
-  let prev = 0;
-  loop = timer((elapsed) => {
-    // elapsed is cumulative; advance by frame delta using a closure variable
-    const dt = Math.min(elapsed - prev, 100) / 1000;
-    prev = elapsed;
-    if (!playing || rows.length === 0) return;
-    now += dt * speed * 60;
-    if (now >= DAY) {
-      now = DAY;
-      setPlaying(false);
-    }
-    render();
-  });
+  function startLoop() {
+    loop?.stop();
+    let prev = 0;
+    loop = timer((elapsed) => {
+      // elapsed is cumulative since the timer started; advance by the frame delta
+      const dt = Math.min(elapsed - prev, 100) / 1000;
+      prev = elapsed;
+      if (!playing || rows.length === 0) return;
+      now += dt * speed * 60;
+      if (now >= DAY) {
+        now = DAY;
+        setPlaying(false);
+      }
+      render();
+    });
+  }
 
   return () => {
     disposed = true;
@@ -173,5 +172,6 @@ export function mount(host: HTMLElement): () => void {
     toggle.removeEventListener('click', onToggle);
     scrub.removeEventListener('input', onScrub);
     speedSel.removeEventListener('change', onSpeed);
+    themeObserver.disconnect();
   };
 }

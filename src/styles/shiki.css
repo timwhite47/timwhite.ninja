@@ -17,3 +17,5 @@
   font-family: var(--font-mono); font-size: var(--fs-0); color: var(--muted);
   border: 1px solid var(--rule); border-bottom: 0; padding: var(--s-1) var(--s-4); background: var(--surface);
 }
+/* github-light-high-contrast comments (#66707B) are 4.14:1 on --surface-2; darken to clear AA 4.5:1 */
+:root:not([data-theme='dark']) .astro-code span[style*='--shiki-light:#66707B'] { color: #58616B; }

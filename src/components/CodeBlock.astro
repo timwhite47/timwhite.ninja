@@ -1,10 +1,11 @@
 ---
 import { Code } from 'astro:components';
+import type { BundledLanguage } from 'shiki';
 import { SHIKI_THEMES } from '../lib/shiki';
 
 interface Props {
   code: string;
-  lang?: string;
+  lang?: BundledLanguage | 'text';
   filename?: string;
 }
 const { code, lang = 'text', filename } = Astro.props;
@@ -12,5 +13,5 @@ const { code, lang = 'text', filename } = Astro.props;
 
 <div class="codeblock">
   {filename && <div class="codeblock-bar">{filename}</div>}
-  <Code code={code} lang={lang as any} themes={SHIKI_THEMES} defaultColor={false} />
+  <Code code={code} lang={lang} themes={SHIKI_THEMES} defaultColor={false} />
 </div>

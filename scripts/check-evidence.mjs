@@ -20,8 +20,10 @@ for (const e of entries) if (!dirs.includes(e)) errors.push(`evidence entry ${e}
 
 for (const d of dirs.filter((d) => entries.includes(d))) {
   const text = readFileSync(path.join(evDir, `${d}.mdx`), 'utf8');
+  const fmText = text.match(/^---\r?\n([\s\S]*?)\r?\n---/)?.[1] ?? '';
+  const declared = new Set([...fmText.matchAll(/path:\s*["']?([A-Za-z0-9._-]+)/g)].map((m) => m[1]));
   for (const f of readdirSync(path.join(filesDir, d))) {
-    if (!text.includes(f)) errors.push(`undeclared file public/files/${d}/${f} is not mentioned in ${d}.mdx`);
+    if (!declared.has(f)) errors.push(`undeclared file public/files/${d}/${f} is not declared under files: in ${d}.mdx`);
   }
 }
 
@@ -29,8 +31,19 @@ for (const dir of [postsDir, evDir]) {
   if (!existsSync(dir)) continue;
   for (const f of readdirSync(dir).filter((f) => f.endsWith('.mdx'))) {
     const text = readFileSync(path.join(dir, f), 'utf8');
-    const fm = text.match(/^---\n([\s\S]*?)\n---/)?.[1] ?? '';
-    const body = text.slice(fm.length);
+    const m = text.match(/^---\r?\n([\s\S]*?)\r?\n---/);
+    const fm = m?.[1] ?? '';
+    const body = text.slice(m ? m[0].length : 0);
+    const rel = path.relative(root, path.join(dir, f));
+    const refDir = (field, targetDir) => {
+      const arr = fm.match(new RegExp(`^${field}:\\s*\\[([^\\]]*)\\]`, 'm'));
+      if (!arr) return;
+      for (const id of arr[1].split(',').map((x) => x.trim().replace(/^["']|["']$/g, '')).filter(Boolean))
+        if (!existsSync(path.join(targetDir, `${id}.mdx`)))
+          errors.push(`${rel}: ${field} references unknown "${id}"`);
+    };
+    if (dir === postsDir) refDir('evidence', evDir);
+    else refDir('related', postsDir);
     // strip JSX comments so documentation examples are not checked
     const live = body.replace(/\{\/\*[\s\S]*?\*\/\}/g, '');
     for (const m of live.matchAll(/<Cite\s+id="([^"]+)"/g)) {

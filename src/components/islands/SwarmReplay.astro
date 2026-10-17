@@ -1,6 +1,7 @@
 ---
 import { getEntry } from 'astro:content';
 import { resolveFiles } from '../../lib/evidence-files';
+import { isPublished } from '../../lib/collections';
 import Island from '../Island.astro';
 
 interface Props {
@@ -12,6 +13,7 @@ interface Props {
 const { evidence, file, caption, autoplay = false } = Astro.props;
 const entry = await getEntry('evidence', evidence);
 if (!entry) throw new Error(`<SwarmReplay evidence="${evidence}"> matches no evidence entry`);
+if (!isPublished(entry)) throw new Error(`<SwarmReplay evidence="${evidence}"> embeds a draft evidence entry`);
 const files = resolveFiles(entry);
 const f = file ? files.find((x) => x.path === file) : files.find((x) => x.role === 'primary');
 if (!f) throw new Error(`<SwarmReplay> could not find a CSV in evidence "${evidence}"`);
@@ -20,7 +22,7 @@ if (!f) throw new Error(`<SwarmReplay> could not find a CSV in evidence "${evide
 <Island name="swarm-replay" caption={caption} fallbackHref={f.url} fallbackText="Download the CSV">
   <swarm-replay data-src={f.url} data-autoplay={autoplay ? 'true' : 'false'}>
     <div class="replay-toolbar">
-      <button type="button" data-action="toggle" aria-pressed="false">Play</button>
+      <button type="button" data-action="toggle">Play</button>
       <input type="range" data-action="scrub" min="0" max="1000" value="0" aria-label="Time" />
       <select data-action="speed" aria-label="Speed">
         <option value="1">1×</option>

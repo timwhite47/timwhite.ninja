@@ -16,11 +16,19 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
 <meta name="color-scheme" content="light dark" />
 <script is:inline>
   (() => {
+    let s = null;
     try {
-      const s = localStorage.getItem('theme');
-      const t = s === 'light' || s === 'dark' ? s : matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-      document.documentElement.dataset.theme = t;
+      s = localStorage.getItem('theme');
     } catch {}
+    let t = s === 'light' || s === 'dark' ? s : null;
+    if (!t) {
+      try {
+        t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      } catch {
+        t = 'light';
+      }
+    }
+    document.documentElement.dataset.theme = t;
   })();
 </script>
 <title>{fullTitle}</title>
