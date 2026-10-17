@@ -4,8 +4,8 @@ export interface NavItem {
 }
 
 export const SITE = {
-  // Set before first deploy: feeds canonical URLs, RSS and sitemap.
-  url: 'https://example.com',
+  // Feeds canonical URLs, RSS and sitemap. DNS + hosting: see SETUP.md.
+  url: 'https://timwhite.ninja',
   title: 'Case Files',
   tagline: 'Investigative notes on AI agents, with the evidence attached.',
   author: 'Tim White',

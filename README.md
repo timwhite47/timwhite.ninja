@@ -31,7 +31,6 @@ import SwarmReplay from '../../components/islands/SwarmReplay.astro';
 Copy `src/components/islands/SwarmReplay.astro` and `src/islands/swarm-replay.ts`, add the name to the `island` enum in `src/content.config.ts`, and register the component in `src/layouts/Evidence.astro`. Keep the IntersectionObserver + dynamic `import()` pattern so d3 stays out of the shared bundle.
 
 ## Deploy
-Set `SITE.url` in `src/site.ts` first (`robots.txt` and the sitemap are generated from it). `base` is `/`, so use a custom domain or a user site.
-- Cloudflare Pages: build `npm run build`, output `dist`, env `NODE_VERSION=22`; `_headers` applies.
-- GitHub Pages: official `withastro/action` workflow. `_headers` is ignored (the `.py` View link may download).
-- Netlify: build `npm run build`, publish `dist`, `NODE_VERSION=22`; `_headers` applies.
+Live at `https://timwhite.ninja` via GitHub Pages: `.github/workflows/deploy.yml` builds and deploys on every push to `main`. `SITE.url` in `src/site.ts` and `public/CNAME` carry the domain. DNS, Pages settings and email authentication are in [SETUP.md](SETUP.md).
+
+GitHub Pages ignores `public/_headers`, so the `.py` "View" link may download instead of displaying. Cloudflare Pages or Netlify would honor it (build `npm run build`, output `dist`, `NODE_VERSION=22`).
